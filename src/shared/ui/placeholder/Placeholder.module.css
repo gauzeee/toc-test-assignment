@@ -1,0 +1,5 @@
+.placeholder {
+    height: 100%;
+    width: 100%;
+    background: var(--inverted-background-color);
+}

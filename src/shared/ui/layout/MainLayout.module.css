@@ -1,0 +1,15 @@
+.aside {
+  grid-area: aside;
+}
+
+.header {
+  grid-area: header;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.main {
+  grid-area: main;
+}

@@ -1,0 +1,5 @@
+.topLevelList {
+  height: calc(100dvh - var(--header-height));
+  overflow-x: auto;
+  border-right: 0.0625rem solid var(--gray-color-d1);
+}
