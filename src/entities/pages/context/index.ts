@@ -1,2 +1,3 @@
-export { PagesProvider } from './PagesContext.tsx'
-export { usePagesContext } from './usePagesContext.ts'
+export { PagesProvider } from './PagesContext'
+export { usePagesContext } from './usePagesContext'
+export type { EnhancedPage } from './types'

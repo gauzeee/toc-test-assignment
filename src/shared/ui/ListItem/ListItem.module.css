@@ -17,7 +17,7 @@
     border-color 0.3s,
     color 0.3s;
 
-  &:hover {
+  &:hover, &Backlight {
     background-color: var(--base-opacity-hover);
     border-color: var(--border-opacity-hover);
   }

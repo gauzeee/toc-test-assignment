@@ -1,0 +1,5 @@
+.nestedList {
+  &Active {
+    background-color: var(--base-opacity-hover);
+  }
+}

@@ -1,6 +1,9 @@
 import { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
-import { PagesContextProps } from './types'
+import { flushSync } from 'react-dom'
+
 import { ApiResponse } from '@/server/types'
+
+import { EnhancedPage, PagesContextProps, PagesData } from './types'
 
 export const PagesContext = createContext<PagesContextProps>({
   loading: true,
@@ -15,22 +18,51 @@ const loadPages = async () => {
   }
 }
 
+const mapPagesDataToEnhancedPages = (data: ApiResponse): PagesData => {
+  const {
+    entities: { pages },
+    topLevelIds,
+  } = data
+
+  for (const pageId in pages) {
+    let page = pages[pageId]
+    while (page?.parentId) {
+      const parentPage = pages[page.parentId] as EnhancedPage
+      if (parentPage) {
+        parentPage.allNestedPagesIds = [
+          ...(parentPage.allNestedPagesIds || []),
+          pageId,
+        ]
+      }
+      page = pages[page.parentId]
+    }
+  }
+
+  return {
+    pages,
+    topLevelIds,
+  } as PagesData
+}
+
 export const PagesProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true)
-  const [data, setData] = useState<ApiResponse>()
+  const [data, setData] = useState<PagesData>({ pages: {}, topLevelIds: [] })
 
   useEffect(() => {
     ;(async () => {
-      const pages = await loadPages()
-      setData(pages)
-      setLoading(false)
+      const data = await loadPages()
+      flushSync(() => {
+        setData(mapPagesDataToEnhancedPages(data))
+        setLoading(false)
+      })
     })()
   }, [])
 
   const contextValue = useMemo(
     () => ({
       loading,
-      data,
+      pages: data.pages,
+      topLevelIds: data.topLevelIds,
     }),
     [data, loading]
   )

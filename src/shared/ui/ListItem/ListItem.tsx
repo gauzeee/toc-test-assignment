@@ -1,4 +1,10 @@
-import { MouseEventHandler, ReactNode } from 'react'
+import {
+  forwardRef,
+  KeyboardEventHandler,
+  memo,
+  MouseEventHandler,
+  ReactNode,
+} from 'react'
 import { clsx } from 'clsx'
 
 import { RightIcon } from '@/shared'
@@ -9,33 +15,55 @@ interface ListItemProps {
   level: number
   hasInnerList?: boolean
   children: ReactNode
-  handleClick: MouseEventHandler<HTMLLIElement> | undefined
+  handleClick?: MouseEventHandler<HTMLLIElement>
+  handleKeyUp?: KeyboardEventHandler<HTMLLIElement>
   isActive?: boolean
   isOpen?: boolean
+  testId?: string
+  showBacklight?: boolean
 }
 
-export const ListItem = ({
-  children,
-  handleClick,
-  hasInnerList,
-  level,
-  isActive,
-  isOpen,
-}: ListItemProps) => {
-  return (
-    <li
-      onClick={handleClick}
-      role="button"
-      className={clsx(
-        styles.listItem,
-        isActive && styles.listItemActive,
-        isOpen && styles.listItemExpanded
-      )}
-      style={{
-        paddingLeft: 22 * (level + 1) + (hasInnerList ? 0 : 20),
-      }}
-    >
-      {hasInnerList && <RightIcon className={styles.listItemIcon} />} {children}
-    </li>
+export const ListItem = memo(
+  forwardRef<HTMLLIElement, ListItemProps>(
+    (
+      {
+        children,
+        handleClick,
+        handleKeyUp,
+        hasInnerList,
+        level,
+        isActive,
+        isOpen,
+        testId,
+        showBacklight,
+      },
+      ref
+    ) => {
+      return (
+        <li
+          data-test-id={testId}
+          ref={ref}
+          onClick={handleClick}
+          onKeyUp={handleKeyUp}
+          role="button"
+          tabIndex={0}
+          className={clsx(
+            styles.listItem,
+            isActive && styles.listItemActive,
+            isOpen && styles.listItemExpanded,
+            showBacklight && styles.listItemBacklight
+          )}
+          aria-expanded={isOpen}
+          style={{
+            paddingLeft: 16 * (level + 1) + (hasInnerList ? 0 : 20),
+          }}
+        >
+          {hasInnerList && <RightIcon className={styles.listItemIcon} />}{' '}
+          {children}
+        </li>
+      )
+    }
   )
-}
+)
+
+ListItem.displayName = 'ListItem'

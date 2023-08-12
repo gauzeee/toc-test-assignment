@@ -1,6 +1,7 @@
+import cors from 'cors'
 import express from 'express'
 import https from 'https'
-import cors from 'cors'
+
 import { ApiResponse } from './types'
 
 const PORT = 4000

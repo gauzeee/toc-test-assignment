@@ -1,1 +1,2 @@
-export { useLocationHash } from './useLocationHash.ts'
+export { useLocationHash } from './useLocationHash'
+export { useScrollToElementOnInitialRender } from './useScrollToElementOnInitialRender'
