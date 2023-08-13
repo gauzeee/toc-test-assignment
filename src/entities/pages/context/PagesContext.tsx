@@ -1,21 +1,13 @@
 import { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
 
 import { ApiResponse } from '@/server/types'
+import { apiService } from '@/shared'
 
 import { EnhancedPage, PagesContextProps, PagesData } from './types'
 
 export const PagesContext = createContext<PagesContextProps>({
   loading: true,
 } as PagesContextProps)
-
-const loadPages = async () => {
-  try {
-    const response = await fetch('http://localhost:4000/')
-    return await response.json()
-  } catch (e) {
-    console.error(e)
-  }
-}
 
 const mapPagesDataToEnhancedPages = (data: ApiResponse): PagesData => {
   const {
@@ -49,8 +41,10 @@ export const PagesProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     ;(async () => {
-      const data = await loadPages()
-      setData(mapPagesDataToEnhancedPages(data))
+      const data = await apiService.getAllPages()
+      if (data) {
+        setData(mapPagesDataToEnhancedPages(data))
+      }
       setLoading(false)
     })()
   }, [])

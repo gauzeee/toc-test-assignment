@@ -35,7 +35,7 @@ const startServer = async () => {
   try {
     const data = await loadData()
 
-    app.get('/', (req, res) => {
+    app.get('/pages', (req, res) => {
       const {
         query: { search },
       } = req
@@ -63,6 +63,18 @@ const startServer = async () => {
         return res.json(dataWithMatchedTitles)
       }
       return res.json(data)
+    })
+
+    app.get('/pages/:pageId', (req, res) => {
+      const pageId = req.params.pageId
+      const page = data.entities.pages?.[pageId]
+
+      if (page) {
+        res.json(page)
+      } else {
+        res.status(404)
+        res.send(`Page with id: ${pageId} not found`)
+      }
     })
 
     app.listen(PORT, () => {
