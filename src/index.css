@@ -27,6 +27,7 @@
   --light-primary: #6b57ff;
   --base-opacity-hover: rgba(25, 25, 28, 0.05);
   --border-opacity-hover: rgba(25, 25, 28, 0.005);
+  --opacity-hover: rgba(25, 25, 28, 0.1);
 
   /* Sizes */
   --header-height: 4.5rem;
@@ -43,6 +44,7 @@
     --text-color: #fff;
     --inverted-text-color: #000;
     --base-opacity-hover: rgba(255, 255, 255, 0.05);
+    --opacity-hover: rgba(255, 255, 255, 0.1);
     --border-opacity-hover: rgba(255, 255, 255, 0.005);
   }
 }

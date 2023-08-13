@@ -1,21 +1,14 @@
-import {
-  KeyboardEvent,
-  SyntheticEvent,
-  useCallback,
-  useRef,
-  useState,
-} from 'react'
+import { KeyboardEvent, memo, SyntheticEvent, useRef, useState } from 'react'
 
-import { usePagesContext } from '@/entities'
+import { ListItem, usePagesContext } from '@/entities'
 import {
-  ListItem,
   setDocumentTitle,
   useLocationHash,
   useScrollToElementOnInitialRender,
 } from '@/shared'
 
 import { NestedList } from '../NestedList/NestedList'
-export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
+export const ExpandableListItem = memo(({ pageId }: { pageId: string }) => {
   const { pages } = usePagesContext()
   const page = pages?.[pageId]
   const { hash, updateHash } = useLocationHash()
@@ -25,33 +18,31 @@ export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
     page?.allNestedPagesIds?.includes(hash.slice(1)) ?? false
   const [isOpen, setIsOpen] = useState(isActiveParent || isActive)
   const listItemRef = useRef<HTMLLIElement>(null)
+  const activePage = pages?.[hash.slice(1)]
 
   useScrollToElementOnInitialRender(isActive, listItemRef?.current)
 
-  const onSelectElement = useCallback(() => {
+  const onSelectElement = () => {
     setIsOpen((prev) => !prev)
     updateHash(pageId)
     setDocumentTitle(page?.title)
-  }, [page?.title, pageId, updateHash])
+  }
 
-  const handleClick = useCallback(
-    (e: SyntheticEvent<HTMLLIElement>) => {
-      e.stopPropagation()
+  const handleClick = (e: SyntheticEvent<HTMLLIElement>) => {
+    e.stopPropagation()
+    onSelectElement()
+  }
+
+  const handleKeyUp = (e: KeyboardEvent<HTMLLIElement>) => {
+    if (e.key === 'Enter') {
       onSelectElement()
-    },
-    [onSelectElement]
-  )
+    }
+  }
 
-  const handleKeyUp = useCallback(
-    (e: KeyboardEvent<HTMLLIElement>) => {
-      if (e.key === 'Enter') {
-        onSelectElement()
-      }
-    },
-    [onSelectElement]
-  )
-
-  const showBacklight = (isActiveParent && page?.level === 0) || isActive
+  const showBacklight =
+    (isActiveParent && page?.level === 0) ||
+    pageId === activePage?.parentId ||
+    isActive
 
   return (
     <>
@@ -69,8 +60,8 @@ export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
         {page.title}
       </ListItem>
       {hasInnerList && isOpen && (
-        <NestedList pagesIds={page?.pages} isActive={isActiveParent} />
+        <NestedList pagesIds={page.pages} isActive={showBacklight} />
       )}
     </>
   )
-}
+})

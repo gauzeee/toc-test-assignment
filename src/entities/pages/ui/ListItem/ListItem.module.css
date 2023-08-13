@@ -5,10 +5,8 @@
   line-height: 1rem;
   letter-spacing: 0.003625rem;
   display: flex;
-  align-items: center;
   gap: 0.25rem;
-  padding: 0.5rem 0;
-  flex-wrap: wrap;
+  padding: 0.5625rem 1.375rem 0.5625rem 0;
   border: 1px solid transparent;
   cursor: pointer;
   color: var(--text-color);
@@ -17,17 +15,24 @@
     border-color 0.3s,
     color 0.3s;
 
-  &:hover, &Backlight {
+  &:hover,
+  &Backlight {
     background-color: var(--base-opacity-hover);
     border-color: var(--border-opacity-hover);
   }
 
+  &Backlight:hover {
+      background-color: var(--opacity-hover);
+  }
+
   &:focus {
+    outline: none;
     border-color: var(--light-primary);
   }
 
   &Icon {
     transition: transform 0.3s;
+    flex-shrink: 0;
     path {
       transition: fill 0.3s;
       fill: var(--text-color);

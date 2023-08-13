@@ -1,1 +1,1 @@
-export { TopLevelList } from '@/features/pages/ui/TopLevelList/TopLevelList.tsx'
+export { TableOfContents } from './TableOfContents/TableOfContents'

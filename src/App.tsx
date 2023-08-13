@@ -1,14 +1,12 @@
 import { PagesProvider } from '@/entities'
-import { TopLevelList } from '@/features'
 import { MainLayout, Placeholder } from '@/shared'
-
-import './App.css'
+import { PagesNavigation } from '@/widgets'
 function App() {
   return (
     <MainLayout
       asideSlot={
         <PagesProvider>
-          <TopLevelList />
+          <PagesNavigation />
         </PagesProvider>
       }
       mainSlot={<div />}

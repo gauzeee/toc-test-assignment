@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
-import { flushSync } from 'react-dom'
 
 import { ApiResponse } from '@/server/types'
 
@@ -51,10 +50,8 @@ export const PagesProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     ;(async () => {
       const data = await loadPages()
-      flushSync(() => {
-        setData(mapPagesDataToEnhancedPages(data))
-        setLoading(false)
-      })
+      setData(mapPagesDataToEnhancedPages(data))
+      setLoading(false)
     })()
   }, [])
 
