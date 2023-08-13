@@ -1,6 +1,4 @@
-import { ExpandableListItem } from '../ExpandableListItem/ExpandableListItem'
-
-import styles from './TableOfContents.module.css'
+import { ExpandableListItem, Loader } from './parts'
 
 export const TableOfContents = ({
   pagesIds,
@@ -9,12 +7,15 @@ export const TableOfContents = ({
   pagesIds: string[]
   loading?: boolean
 }) => {
-  if (loading) return <div>Loading ...</div>
   return (
-    <ul className={styles.topLevelList}>
-      {pagesIds?.map((pageId) => (
-        <ExpandableListItem key={pageId} pageId={pageId} />
-      ))}
+    <ul>
+      {loading ? (
+        <Loader />
+      ) : (
+        pagesIds?.map((pageId) => (
+          <ExpandableListItem key={pageId} pageId={pageId} />
+        ))
+      )}
     </ul>
   )
 }

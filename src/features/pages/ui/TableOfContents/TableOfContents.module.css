@@ -3,9 +3,3 @@
   overflow-x: auto;
   border-right: 0.0625rem solid var(--gray-color-d1);
 }
-
-.nestedList {
-  &Active {
-    background-color: var(--base-opacity-hover);
-  }
-}

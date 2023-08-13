@@ -1,4 +1,4 @@
-import { KeyboardEvent, memo, SyntheticEvent, useRef, useState } from 'react'
+import { KeyboardEvent, SyntheticEvent, useRef, useState } from 'react'
 
 import { ListItem, usePagesContext } from '@/entities'
 import {
@@ -8,7 +8,7 @@ import {
 } from '@/shared'
 
 import { NestedList } from '../NestedList/NestedList'
-export const ExpandableListItem = memo(({ pageId }: { pageId: string }) => {
+export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
   const { pages } = usePagesContext()
   const page = pages?.[pageId]
   const { hash, updateHash } = useLocationHash()
@@ -64,4 +64,4 @@ export const ExpandableListItem = memo(({ pageId }: { pageId: string }) => {
       )}
     </>
   )
-})
+}
