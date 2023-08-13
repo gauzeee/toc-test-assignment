@@ -2,6 +2,7 @@ import { KeyboardEvent, SyntheticEvent, useRef, useState } from 'react'
 
 import { ListItem, usePagesContext } from '@/entities'
 import {
+  AnimateHeight,
   setDocumentTitle,
   useLocationHash,
   useScrollToElementOnInitialRender,
@@ -59,8 +60,10 @@ export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
       >
         {page.title}
       </ListItem>
-      {hasInnerList && isOpen && (
-        <NestedList pagesIds={page.pages} isActive={showBacklight} />
+      {hasInnerList && (
+        <AnimateHeight isOpen={isOpen}>
+          <NestedList pagesIds={page.pages} isActive={showBacklight} />
+        </AnimateHeight>
       )}
     </>
   )

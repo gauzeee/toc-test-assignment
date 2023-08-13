@@ -1,2 +1,3 @@
-export { MainLayout } from './layout/MainLayout'
-export { Placeholder } from './placeholder/Placeholder'
+export { MainLayout } from './MainLayout/MainLayout'
+export { Placeholder } from './Placeholder/Placeholder'
+export { AnimateHeight } from './AnimateHeight/AnimateHeight'
