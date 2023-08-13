@@ -41,9 +41,7 @@ export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
   }
 
   const showBacklight =
-    (isActiveParent && page?.level === 0) ||
-    pageId === activePage?.parentId ||
-    isActive
+    (isActiveParent && page?.level === 0) || pageId === activePage?.parentId
 
   return (
     <>

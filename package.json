@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
-    "postinstall": "cp .env.template .env.template",
+    "postinstall": "cp .env.template .env.local",
     "server": "tsc -p server/tsconfig.json && cp server/server.js server/server.cjs && node server/server.cjs"
   },
   "dependencies": {
