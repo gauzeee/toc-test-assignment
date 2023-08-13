@@ -6,16 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Table of Content</title>
     <link
-      href="https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans.woff2"
-      rel="preconnect"
-    />
-    <link
       href="https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Regular.woff2"
       rel="preconnect"
     />
+    <style>
+      #loader-wrapper {
+        inset: 0;
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+      }
+      #loader {
+        width: 48px;
+        height: 48px;
+        background: #19191c;
+        border-radius: 50%;
+        position: relative;
+        animation: roll 1s ease-in-out infinite alternate;
+      }
+      #loader:after {
+        content: '';
+        position: absolute;
+        inset: 5px;
+        border-radius: 50%;
+        border: 5px solid;
+        border-color: #6b57ff transparent;
+      }
+      .hide {
+        animation: fadeOut 0.3s forwards;
+      }
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          display: none;
+        }
+      }
+      @keyframes roll {
+        0% {
+          transform: translateX(-150%) rotate(0deg);
+        }
+        100% {
+          transform: translateX(150%) rotate(360deg);
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        #loader-wrapper {
+          background-color: #19191c;
+        }
+        #loader {
+          background: #fff;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('loader-wrapper').classList.add('hide')
+      })
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
