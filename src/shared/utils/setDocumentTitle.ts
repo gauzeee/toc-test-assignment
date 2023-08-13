@@ -1,4 +1,4 @@
-const PAGE_TITLE_BASE = 'Table of Content'
+const PAGE_TITLE_BASE = 'Table of Contents'
 
 export const setDocumentTitle = (newTitle?: string) => {
   const pageTitle = document.querySelector('title')

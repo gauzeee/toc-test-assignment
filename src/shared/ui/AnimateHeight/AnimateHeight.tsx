@@ -9,7 +9,7 @@ export const AnimateHeight = ({
   isOpen: boolean
 }) => {
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isOpen && (
         <motion.div
           style={{ overflow: 'hidden' }}

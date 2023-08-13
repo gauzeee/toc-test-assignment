@@ -51,10 +51,12 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
           isOpen && styles.listItemExpanded,
           showBacklight && styles.listItemBacklight
         )}
-        aria-expanded={isOpen}
         style={{
           paddingLeft: 16 * (level + 1) + (hasInnerList ? 0 : 20),
         }}
+        {...(hasInnerList && {
+          'aria-expanded': isOpen,
+        })}
       >
         {hasInnerList && <RightIcon className={styles.listItemIcon} />}{' '}
         {children}
