@@ -1,16 +1,16 @@
 import { act, renderHook } from '@testing-library/react'
-import { describe, expect, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { useLocationHash } from '@/shared'
 
 describe('useLocationHash', () => {
-  test('initial hash value is set correctly', () => {
+  it('initial hash value is set correctly', () => {
     const { result } = renderHook(() => useLocationHash())
 
     expect(result.current.hash).toBe(window.location.hash)
   })
 
-  test('hash change is detected and updates the hash', () => {
+  it('hash change is detected and updates the hash', () => {
     const { result } = renderHook(() => useLocationHash())
 
     act(() => {
@@ -22,7 +22,7 @@ describe('useLocationHash', () => {
     expect(result.current.hash).toBe('#newHash')
   })
 
-  test('updateHash updates the window.location.hash', () => {
+  it('updateHash updates the window.location.hash', () => {
     const { result } = renderHook(() => useLocationHash())
 
     act(() => {
@@ -32,7 +32,7 @@ describe('useLocationHash', () => {
     expect(window.location.hash).toBe('#updatedHash')
   })
 
-  test('updateHash does not update hash if the same value is provided', () => {
+  it('updateHash does not update hash if the same value is provided', () => {
     const { result } = renderHook(() => useLocationHash())
 
     const initialHash = result.current.hash
@@ -44,7 +44,7 @@ describe('useLocationHash', () => {
     expect(window.location.hash).toBe(initialHash)
   })
 
-  test('cleanup removes event listener', () => {
+  it('cleanup removes event listener', () => {
     const { unmount } = renderHook(() => useLocationHash())
     const removeListener = vi.spyOn(window, 'removeEventListener')
 

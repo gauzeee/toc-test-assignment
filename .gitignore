@@ -25,3 +25,4 @@ dist-ssr
 *.sw?
 /server/*.js
 /server/*.cjs
+/coverage/

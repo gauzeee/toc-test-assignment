@@ -56,13 +56,17 @@ export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
         showBacklight={showBacklight}
         isOpen={isOpen}
         ref={listItemRef}
-        testId={pageId}
+        testId={`${pageId}-list-item`}
       >
         {page.title}
       </ListItem>
       {hasInnerList && (
         <AnimateHeight isOpen={isOpen}>
-          <NestedList pagesIds={page.pages} isActive={showBacklight} />
+          <NestedList
+            pagesIds={page.pages}
+            isActive={showBacklight}
+            testId={`${pageId}-nested-list`}
+          />
         </AnimateHeight>
       )}
     </>

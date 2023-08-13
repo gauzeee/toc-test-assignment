@@ -1,39 +1,13 @@
 import { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
 
-import { ApiResponse } from '@/server/types'
 import { apiService } from '@/shared'
 
-import { EnhancedPage, PagesContextProps, PagesData } from './types'
+import { mapPagesDataToEnhancedPages } from './utils/mapPagesDataToEnhancedPages'
+import { PagesContextProps, PagesData } from './types'
 
 export const PagesContext = createContext<PagesContextProps>({
   loading: true,
 } as PagesContextProps)
-
-const mapPagesDataToEnhancedPages = (data: ApiResponse): PagesData => {
-  const {
-    entities: { pages },
-    topLevelIds,
-  } = data
-
-  for (const pageId in pages) {
-    let page = pages[pageId]
-    while (page?.parentId) {
-      const parentPage = pages[page.parentId] as EnhancedPage
-      if (parentPage) {
-        parentPage.allNestedPagesIds = [
-          ...(parentPage.allNestedPagesIds || []),
-          pageId,
-        ]
-      }
-      page = pages[page.parentId]
-    }
-  }
-
-  return {
-    pages,
-    topLevelIds,
-  } as PagesData
-}
 
 export const PagesProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true)

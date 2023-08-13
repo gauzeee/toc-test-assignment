@@ -1,18 +1,15 @@
+import { usePagesContext } from '@/entities'
+
 import { ExpandableListItem, Loader } from './parts'
 
-export const TableOfContents = ({
-  pagesIds,
-  loading,
-}: {
-  pagesIds: string[]
-  loading?: boolean
-}) => {
+export const TableOfContents = () => {
+  const { topLevelIds, loading } = usePagesContext()
   return (
     <ul>
       {loading ? (
         <Loader />
       ) : (
-        pagesIds?.map((pageId) => (
+        topLevelIds?.map((pageId) => (
           <ExpandableListItem key={pageId} pageId={pageId} />
         ))
       )}

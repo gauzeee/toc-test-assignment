@@ -1,15 +1,42 @@
-import { assert, describe, it } from 'vitest'
+import { assert, describe, it, vi } from 'vitest'
 
-describe('Math.sqrt() test', () => {
-  it('SQRT4', () => {
-    assert.equal(Math.sqrt(4), 2)
+import { setDocumentTitle } from '../setDocumentTitle'
+
+describe('setDocumentTitle', () => {
+  const originalDocumentQuerySelector = document.querySelector
+  afterEach(() => {
+    document.querySelector = originalDocumentQuerySelector
   })
 
-  it('SQRT144', () => {
-    assert.equal(Math.sqrt(144), 12)
+  it('should set the document title with base title', () => {
+    const pageTitle = {
+      text: '',
+    }
+
+    document.querySelector = vi.fn().mockImplementation((selector) => {
+      if (selector === 'title') {
+        return pageTitle
+      }
+    })
+
+    setDocumentTitle('Page Title')
+
+    assert.equal(pageTitle.text, 'Page Title | Table of Contents')
   })
 
-  it('SQRT2', () => {
-    assert.equal(Math.sqrt(2), Math.SQRT2)
+  it('should set the document title to base title if newTitle is undefined', () => {
+    const pageTitle = {
+      text: 'Table of Contents',
+    }
+
+    document.querySelector = vi.fn().mockImplementation((selector) => {
+      if (selector === 'title') {
+        return pageTitle
+      }
+    })
+
+    setDocumentTitle()
+
+    assert.equal(pageTitle.text, 'Table of Contents')
   })
 })

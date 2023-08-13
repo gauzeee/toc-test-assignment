@@ -16,10 +16,18 @@ export const MainLayout = ({
 }: MainLayoutProps) => {
   return (
     <>
-      <header className={styles.header}>{headerSlot}</header>
-      <aside className={styles.aside}>{asideSlot}</aside>
-      <main className={styles.main}>{mainSlot}</main>
-      <footer className={styles.footer}>{footerSlot}</footer>
+      <header data-testid="app-header" className={styles.header}>
+        {headerSlot}
+      </header>
+      <aside data-testid="app-aside" className={styles.aside}>
+        {asideSlot}
+      </aside>
+      <main data-testid="app-main" className={styles.main}>
+        {mainSlot}
+      </main>
+      <footer data-testid="app-footer" className={styles.footer}>
+        {footerSlot}
+      </footer>
     </>
   )
 }

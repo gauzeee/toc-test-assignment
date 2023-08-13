@@ -8,7 +8,6 @@ export interface PagesContextProps {
   pages: Record<string, EnhancedPage>
   topLevelIds: ApiResponse['topLevelIds']
   loading: boolean
-  nestedPagesIds?: Record<string, string[]>
 }
 
 export type PagesData = Pick<PagesContextProps, 'pages' | 'topLevelIds'>

@@ -39,7 +39,7 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
   ) => {
     return (
       <li
-        data-test-id={testId}
+        data-testid={testId}
         ref={ref}
         onClick={handleClick}
         onKeyUp={handleKeyUp}
