@@ -43,6 +43,7 @@
         }
         100% {
           opacity: 0;
+          z-index: -1;
           display: none;
         }
       }
@@ -65,10 +66,11 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
     <div id="loader-wrapper">
       <div id="loader"></div>
     </div>
+    <div id="root"></div>
+
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('loader-wrapper').classList.add('hide')
