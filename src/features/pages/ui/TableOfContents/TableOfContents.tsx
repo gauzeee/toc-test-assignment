@@ -27,7 +27,7 @@ export const TableOfContents = ({
 
   return (
     <>
-      <ul>
+      <ul data-testid="table-of-contents">
         {isLoading ? (
           <Loader />
         ) : (

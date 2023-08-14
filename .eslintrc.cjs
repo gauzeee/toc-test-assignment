@@ -7,12 +7,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: [
-    'dist',
-    '.eslintrc.cjs',
-    'postcss.config.js',
-    'vite.config.ts',
-  ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   settings: {
     react: {

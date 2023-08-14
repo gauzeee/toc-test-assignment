@@ -8,6 +8,7 @@ class ApiService {
       return (await response.json()) as T
     } catch (e) {
       console.error(e)
+      alert(e)
     }
   }
   async getAllPages() {

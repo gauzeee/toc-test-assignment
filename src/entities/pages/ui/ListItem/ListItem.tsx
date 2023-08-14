@@ -58,7 +58,9 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
           'aria-expanded': isOpen,
         })}
       >
-        {hasInnerList && <RightIcon className={styles.listItemIcon} />}{' '}
+        {hasInnerList && (
+          <RightIcon data-testid="right-icon" className={styles.listItemIcon} />
+        )}{' '}
         {children}
       </li>
     )

@@ -17,6 +17,18 @@ describe('TableOfContents', () => {
     expect(getAllByTestId('list-item-loader')[0]).toBeInTheDocument()
   })
 
+  it('renders empty state when loading finished but no pages loaded', () => {
+    const { getByTestId } = render(
+      <TableOfContents
+        loading={false}
+        topLevelIds={undefined}
+        pages={undefined}
+      />
+    )
+    const emptyList = getByTestId('empty-list')
+    expect(emptyList).toBeInTheDocument()
+  })
+
   it('renders list items when loading is false', () => {
     const { getByTestId } = render(
       <TableOfContents

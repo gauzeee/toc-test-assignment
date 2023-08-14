@@ -27,6 +27,6 @@
       "@/server/*": ["../server/*"]
     }
   },
-  "include": ["src", "server"],
+  "include": ["src", "server", "src/__fixtures__"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

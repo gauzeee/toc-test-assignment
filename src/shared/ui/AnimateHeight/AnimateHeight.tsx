@@ -12,6 +12,7 @@ export const AnimateHeight = ({
     <AnimatePresence initial={false}>
       {isOpen && (
         <motion.div
+          data-testid="animated-div"
           style={{ overflow: 'hidden' }}
           initial={{ height: 0 }}
           animate={{ height: 'auto' }}

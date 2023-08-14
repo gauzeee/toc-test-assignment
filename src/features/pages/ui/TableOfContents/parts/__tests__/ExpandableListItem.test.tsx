@@ -1,11 +1,10 @@
 import { fireEvent, render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { PagesContext } from '@/features/pages/lib/context/PagesContext.tsx'
-import { EnhancedPages } from '@/features/pages/lib/context/types.ts'
 import { setDocumentTitle } from '@/shared'
 
-import { ExpandableListItem } from '../ExpandableListItem/ExpandableListItem.tsx'
+import { type EnhancedPages, PagesContext } from '../../../../lib/context'
+import { ExpandableListItem } from '../ExpandableListItem/ExpandableListItem'
 
 describe('ExpandableListItem', () => {
   afterEach(() => {
@@ -54,6 +53,18 @@ describe('ExpandableListItem', () => {
     )
     const pageTitle = getByText(mockPagesContext.mockPageId.title)
     expect(pageTitle).toBeInTheDocument()
+  })
+
+  it('shows backlight for list item in right conditions', () => {
+    window.location.hash = '#mockNestedPageId'
+
+    const { getByTestId } = render(
+      <PagesContext.Provider value={mockPagesContext}>
+        <ExpandableListItem pageId="mockPageId" />
+      </PagesContext.Provider>
+    )
+    const listItem = getByTestId('mockPageId-list-item')
+    expect(listItem.className).to.includes('listItemBacklight')
   })
 
   it('handles click event and toggles isOpen state', () => {

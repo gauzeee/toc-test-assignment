@@ -1,4 +1,4 @@
-import { assert, describe, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { ApiResponse } from '@/server/types'
 
@@ -66,7 +66,7 @@ describe('ApiService', () => {
     }))
     const result = await ApiService.getAllPages()
 
-    assert.deepEqual(result, pagesMock)
+    expect(result).toEqual(pagesMock)
   })
 
   it('should fetch and return a page by id', async () => {
@@ -76,7 +76,7 @@ describe('ApiService', () => {
 
     const result = await ApiService.getPageById('page123')
 
-    assert.deepEqual(result, pagesMock.entities.pages['a'])
+    expect(result).toEqual(pagesMock.entities.pages['a'])
   })
 
   it('should fetch and return search results', async () => {
@@ -85,6 +85,18 @@ describe('ApiService', () => {
     }))
     const result = await ApiService.searchPages('searchKeyword')
 
-    assert.deepEqual(result, searchResult)
+    expect(result).toEqual(searchResult)
+  })
+
+  it('should catch an error', async () => {
+    window.fetch = vi
+      .fn()
+      .mockImplementation(() => Promise.reject(new Error('API Error')))
+    window.alert = vi.fn()
+    console.error = vi.fn()
+
+    await ApiService.getAllPages()
+    expect(window.alert).toBeCalledWith(new Error('API Error'))
+    expect(console.error).toBeCalledWith(new Error('API Error'))
   })
 })

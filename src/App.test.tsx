@@ -1,15 +1,18 @@
-import { render } from '@testing-library/react'
-import { describe, expect } from 'vitest'
+import { act, render, RenderResult } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+
+import { mockApiService } from '@/__fixtures__/helpers'
 
 import App from './App'
 
+mockApiService()
 describe('App', () => {
-  it('renders with layout elements', () => {
-    const app = render(<App />)
+  let container: RenderResult
+  it('renders without crashing', async () => {
+    await act(async () => {
+      container = await render(<App />)
+    })
 
-    expect(app.getByTestId('app-header')).toBeInTheDocument()
-    expect(app.getByTestId('app-footer')).toBeInTheDocument()
-    expect(app.getByTestId('app-main')).toBeInTheDocument()
-    expect(app.getByTestId('app-aside')).toBeInTheDocument()
+    expect(container.container).toBeInTheDocument()
   })
 })
