@@ -1,0 +1,1 @@
+export { mapPagesToEnhancedPages } from './mapPagesToEnhancedPages'

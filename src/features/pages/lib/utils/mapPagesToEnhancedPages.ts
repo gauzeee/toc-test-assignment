@@ -1,13 +1,10 @@
-import { ApiResponse } from '@/server/types'
+import { Page } from '@/server/types'
 
-import { EnhancedPage, PagesData } from '../types'
+import { EnhancedPage } from '../context'
 
-export const mapPagesDataToEnhancedPages = (data: ApiResponse): PagesData => {
-  const {
-    entities: { pages },
-    topLevelIds,
-  } = data
-
+export const mapPagesToEnhancedPages = (
+  pages: Record<string, Page>
+): Record<string, EnhancedPage> => {
   for (const pageId in pages) {
     let page = pages[pageId]
     while (page?.parentId) {
@@ -22,8 +19,5 @@ export const mapPagesDataToEnhancedPages = (data: ApiResponse): PagesData => {
     }
   }
 
-  return {
-    pages,
-    topLevelIds,
-  } as PagesData
+  return pages as Record<string, EnhancedPage>
 }

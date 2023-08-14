@@ -10,7 +10,7 @@ import {
 
 import { NestedList } from '../NestedList/NestedList'
 export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
-  const { pages } = usePagesContext()
+  const pages = usePagesContext()
   const page = pages?.[pageId]
   const { hash, updateHash } = useLocationHash()
   const hasInnerList = !!page?.pages?.length

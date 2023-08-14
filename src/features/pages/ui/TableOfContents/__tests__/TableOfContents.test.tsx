@@ -1,42 +1,37 @@
 import { render } from '@testing-library/react'
-import { describe, expect, it, Mock, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-import { usePagesContext } from '@/entities'
+import { Page } from '@/server/types'
 
 import { TableOfContents } from '../TableOfContents'
 
-vi.mock('@/entities', async () => {
-  const mod = await vi.importActual('@/entities')
-  return {
-    ...(mod as NonNullable<unknown>),
-    usePagesContext: vi.fn(),
-  }
-})
-
 describe('TableOfContents', () => {
   it('renders loader when loading is true', () => {
-    ;(usePagesContext as Mock).mockReturnValue({
-      topLevelIds: [],
-      loading: true,
-    })
-    const { getAllByTestId } = render(<TableOfContents />)
+    const { getAllByTestId } = render(
+      <TableOfContents
+        loading={true}
+        pages={undefined}
+        topLevelIds={undefined}
+      />
+    )
     expect(getAllByTestId('list-item-loader')[0]).toBeInTheDocument()
   })
 
   it('renders list items when loading is false', () => {
-    ;(usePagesContext as Mock).mockReturnValue({
-      pages: {
-        page1: {
-          level: 0,
-        },
-        page2: {
-          level: 0,
-        },
-      },
-      topLevelIds: ['page1', 'page2'],
-      loading: false,
-    })
-    const { getByTestId } = render(<TableOfContents />)
+    const { getByTestId } = render(
+      <TableOfContents
+        loading={false}
+        topLevelIds={['page1', 'page2']}
+        pages={{
+          page1: {
+            level: 0,
+          } as Page,
+          page2: {
+            level: 0,
+          } as Page,
+        }}
+      />
+    )
 
     expect(getByTestId('page1-list-item')).toBeInTheDocument()
     expect(getByTestId('page2-list-item')).toBeInTheDocument()
