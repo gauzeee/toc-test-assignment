@@ -6,7 +6,8 @@ dotenv.config()
  * See https://playwright.dev/docs/test-configuration.
  */
 
-const baseURL = `http://127.0.0.1:${process.env.VITE_DEV_SERVER_PORT || 5147}`
+const baseURL = `http://localhost:${process.env.VITE_DEV_SERVER_PORT || 5147}`
+console.log('PLAYWRIGHT BSE URL', baseURL)
 export default defineConfig({
   testDir: './integrations',
   testMatch: /.*\.spec\.ts/,
