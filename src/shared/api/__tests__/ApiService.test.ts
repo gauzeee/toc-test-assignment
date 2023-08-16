@@ -60,6 +60,10 @@ const searchResult: ApiResponse = {
 }
 
 describe('ApiService', () => {
+  const originalFetch = window.fetch
+  beforeEach(() => {
+    window.fetch = originalFetch
+  })
   it('should fetch and return all pages', async () => {
     window.fetch = vi.fn().mockImplementation(() => ({
       json: () => Promise.resolve(pagesMock),
@@ -95,8 +99,18 @@ describe('ApiService', () => {
     window.alert = vi.fn()
     console.error = vi.fn()
 
-    await ApiService.getAllPages()
+    await ApiService.searchPages('new')
     expect(window.alert).toBeCalledWith(new Error('API Error'))
     expect(console.error).toBeCalledWith(new Error('API Error'))
+  })
+
+  it('should return cached result for second request for the same url', async () => {
+    window.fetch = vi.fn().mockImplementation(() => ({
+      json: () => Promise.resolve(pagesMock),
+    }))
+    const firstResult = await ApiService.searchPages('123')
+    const secondResult = await ApiService.searchPages('123')
+    expect(firstResult).toEqual(secondResult)
+    expect(window.fetch).toBeCalledTimes(1)
   })
 })

@@ -13,6 +13,7 @@
     "postinstall": "cp .env.template .env.local",
     "server": "tsc -p server/tsconfig.json && cp server/server.js server/server.cjs && node server/server.cjs",
     "test:unit": "npx vitest run",
+    "test:unit:coverage": "npx vitest run --coverage",
     "test:integration": "npx playwright test"
   },
   "dependencies": {

@@ -12,6 +12,8 @@ export const PagesNavigation = () => {
   const { searchParams } = useSearchParams()
   const searchString = useMemo(() => searchParams.get('q'), [searchParams])
 
+  console.log(searchParams)
+
   useEffect(() => {
     setLoading(true)
     ;(async () => {

@@ -12,6 +12,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     input?: string
     label?: string
   }
+  testId?: string
 }
 
 export const Input = ({
@@ -20,6 +21,7 @@ export const Input = ({
   id,
   type = 'text',
   iconBefore,
+  testId,
   ...rest
 }: InputProps) => {
   return (
@@ -29,9 +31,11 @@ export const Input = ({
         !!iconBefore && styles.containerWithIconBefore,
         classes?.container
       )}
+      data-testid={`${testId}-container`}
     >
       <div className={styles.inputIconBeforeContainer}>{iconBefore}</div>
       <input
+        data-testid={testId}
         id={id}
         type={type}
         className={clsx(
@@ -41,7 +45,11 @@ export const Input = ({
         )}
         {...rest}
       />
-      <label htmlFor={id} className={clsx(styles.label, classes?.label)}>
+      <label
+        htmlFor={id}
+        className={clsx(styles.label, classes?.label)}
+        data-testid={`${testId}-label`}
+      >
         {label}
       </label>
     </div>

@@ -26,6 +26,9 @@ export const mockApiService = (customPayload?: MockPayload) => {
         getAllPages: async () => {
           return Promise.resolve(mock)
         },
+        searchPages: async () => {
+          return Promise.resolve(mock)
+        },
       },
     }
   })

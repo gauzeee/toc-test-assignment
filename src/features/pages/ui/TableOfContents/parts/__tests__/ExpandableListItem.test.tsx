@@ -6,6 +6,8 @@ import { setDocumentTitle } from '@/shared'
 import { type EnhancedPages, PagesContext } from '../../../../lib/context'
 import { ExpandableListItem } from '../ExpandableListItem/ExpandableListItem'
 
+const updateHashMock = vi.fn()
+
 describe('ExpandableListItem', () => {
   afterEach(() => {
     vi.resetAllMocks()
@@ -56,7 +58,17 @@ describe('ExpandableListItem', () => {
   })
 
   it('shows backlight for list item in right conditions', () => {
-    window.location.hash = '#mockNestedPageId'
+    vi.mock('@/shared', async () => {
+      const actual = await vi.importActual('@/shared')
+      return {
+        ...(actual as NonNullable<unknown>),
+        setDocumentTitle: vi.fn(),
+        useLocationHash: () => ({
+          hash: '#mockNestedPageId',
+          updateHash: vi.fn(),
+        }),
+      }
+    })
 
     const { getByTestId } = render(
       <PagesContext.Provider value={mockPagesContext}>
@@ -79,7 +91,7 @@ describe('ExpandableListItem', () => {
     expect(innerListItem).toBeInTheDocument()
   })
 
-  it('updates the document title on click', () => {
+  it('updates the document title and location hash on click', () => {
     Element.prototype.scrollIntoView = vi.fn()
 
     vi.mock('@/shared', async () => {
@@ -87,6 +99,10 @@ describe('ExpandableListItem', () => {
       return {
         ...(actual as NonNullable<unknown>),
         setDocumentTitle: vi.fn(),
+        useLocationHash: () => ({
+          hash: '#mockNestedPageId',
+          updateHash: updateHashMock,
+        }),
       }
     })
 
@@ -98,6 +114,7 @@ describe('ExpandableListItem', () => {
     const listItem = getByText(mockPagesContext.mockPageId.title)
     fireEvent.click(listItem)
     expect(setDocumentTitle).toBeCalledWith(mockPagesContext.mockPageId.title)
+    expect(updateHashMock).toBeCalledWith(mockPagesContext.mockPageId.id)
   })
 
   it('handles keyUp event and triggers onSelectElement on Enter', () => {

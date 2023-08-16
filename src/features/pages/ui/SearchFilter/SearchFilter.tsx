@@ -29,6 +29,7 @@ export const SearchFilter = ({ disabled }: { disabled?: boolean }) => {
       onSubmit={handleSubmit}
       className={styles.form}
       aria-disabled={disabled}
+      data-testid="search-form"
     >
       <Input
         disabled={disabled}
@@ -39,6 +40,7 @@ export const SearchFilter = ({ disabled }: { disabled?: boolean }) => {
         onChange={handleChange}
         id="q"
         name="q"
+        testId="search-input"
         aria-label="Search for pages..."
       />
     </form>
