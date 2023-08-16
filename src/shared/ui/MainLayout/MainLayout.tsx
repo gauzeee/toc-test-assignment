@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import styles from './MainLayout.module.css'
 
-interface MainLayoutProps {
+type MainLayoutProps = {
   asideSlot: ReactNode
   mainSlot: ReactNode
   headerSlot: ReactNode

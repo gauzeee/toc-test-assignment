@@ -6,7 +6,7 @@ import { mapPagesToEnhancedPages, PagesContext } from '../../lib'
 
 import { EmptyList, ExpandableListItem, Loader } from './parts'
 
-interface TableOfContentsProps {
+type TableOfContentsProps = {
   topLevelIds?: string[]
   loading?: boolean
   pages?: Record<string, Page>
