@@ -15,9 +15,7 @@ test.describe('Table of Contents component', () => {
     await page.goto('/')
     const emptyStateLocator = await page.getByTestId('empty-list')
     await expect(emptyStateLocator).toBeVisible()
-    await expect(emptyStateLocator).toHaveText(
-      'No Pages for Table of Contents provided'
-    )
+    await expect(emptyStateLocator).toHaveText('No Pages found')
   })
 
   test.describe('interactions and states', () => {

@@ -1,13 +1,12 @@
 import { defineConfig, devices } from '@playwright/test'
 import dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({ path: '.env.local' })
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 
 const baseURL = `http://localhost:${process.env.VITE_DEV_SERVER_PORT || 5147}`
-console.log('PLAYWRIGHT BSE URL', baseURL)
 export default defineConfig({
   testDir: './integrations',
   testMatch: /.*\.spec\.ts/,
