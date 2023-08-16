@@ -35,6 +35,7 @@ export default ({ mode }) => {
       coverage: {
         provider: 'v8',
         exclude: ['**/__fixtures__/*', 'integrations'],
+        reporter: ['json-summary'],
       },
     },
   })

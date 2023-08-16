@@ -8,7 +8,7 @@ class ApiService {
   private async request<T>(url: string) {
     if (url in cachedData) return Promise.resolve(cachedData[url] as T)
     try {
-      const response = await fetch(`${baseUrl}${url}`)
+      const response = await fetch(`${baseUrl}/pages${url}`)
       const data = (await response.json()) as T
       cachedData[url] = data
       return data
@@ -18,15 +18,15 @@ class ApiService {
     }
   }
   async getAllPages() {
-    return await this.request<ApiResponse>('/pages')
+    return await this.request<ApiResponse>('')
   }
 
   async getPageById(pageId: string) {
-    return this.request<Page>(`/pages/${pageId}`)
+    return this.request<Page>(`/${pageId}`)
   }
 
   async searchPages(searchString?: string) {
-    return this.request<ApiResponse>(`/pages?q=${searchString}`)
+    return this.request<ApiResponse>(`?q=${searchString}`)
   }
 }
 

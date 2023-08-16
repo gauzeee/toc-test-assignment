@@ -13,7 +13,7 @@
     "postinstall": "cp .env.template .env.local",
     "server": "tsc -p server/tsconfig.json && cp server/server.js server/server.cjs && node server/server.cjs",
     "test:unit": "npx vitest run",
-    "test:unit:coverage": "npx vitest run --coverage",
+    "test:unit:coverage": "npx vitest run --coverage && make-coverage-badge --output-path=./misc/badge.svg",
     "test:integration": "npx playwright test"
   },
   "dependencies": {
@@ -51,6 +51,7 @@
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "lint-staged": "^13.2.3",
+    "make-coverage-badge": "^1.2.0",
     "postcss": "^8.4.27",
     "postcss-nested": "^6.0.1",
     "prettier": "^3.0.1",

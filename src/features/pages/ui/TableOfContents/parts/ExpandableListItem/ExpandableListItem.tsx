@@ -1,6 +1,7 @@
 import { KeyboardEvent, SyntheticEvent, useRef, useState } from 'react'
 
-import { ListItem, usePagesContext } from '@/entities'
+import { ListItem } from '@/entities'
+import { useListItemState } from '@/features/pages/lib'
 import {
   AnimateHeight,
   setDocumentTitle,
@@ -10,19 +11,13 @@ import {
 
 import { NestedList } from '../NestedList/NestedList'
 export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
-  const pages = usePagesContext()
-  const page = pages?.[pageId]
   const { hash, updateHash } = useLocationHash()
-  const hasInnerList = !!page?.pages?.length
-  const isActive = `#${pageId}` === hash
-  const isActiveParent =
-    page?.allNestedPagesIds?.includes(hash.slice(1)) ?? false
+  const { page, showBacklight, isActiveParent, isActive, hasInnerList } =
+    useListItemState(pageId, hash)
   const [isOpen, setIsOpen] = useState(isActiveParent || isActive)
   const listItemRef = useRef<HTMLLIElement>(null)
-  const activePage = pages?.[hash.slice(1)]
 
   useScrollToElementOnInitialRender(isActive, listItemRef?.current)
-
   const onSelectElement = () => {
     setIsOpen((prev) => !prev)
     updateHash(pageId)
@@ -39,9 +34,6 @@ export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
       onSelectElement()
     }
   }
-
-  const showBacklight =
-    (isActiveParent && page?.level === 0) || pageId === activePage?.parentId
 
   return (
     <>

@@ -1,8 +1,10 @@
 import {
   forwardRef,
   KeyboardEventHandler,
+  LiHTMLAttributes,
   MouseEventHandler,
   ReactNode,
+  useMemo,
 } from 'react'
 import { clsx } from 'clsx'
 
@@ -10,7 +12,7 @@ import { RightIcon } from '@/shared'
 
 import styles from './ListItem.module.css'
 
-interface ListItemProps {
+interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {
   level: number
   hasInnerList?: boolean
   children: ReactNode
@@ -37,6 +39,10 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
     },
     ref
   ) => {
+    const paddingLeft = useMemo(
+      () => 16 * (level + 1) + (hasInnerList ? 0 : 20),
+      [level, hasInnerList]
+    )
     return (
       <li
         data-testid={testId}
@@ -51,9 +57,7 @@ export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
           isOpen && styles.listItemExpanded,
           showBacklight && styles.listItemBacklight
         )}
-        style={{
-          paddingLeft: 16 * (level + 1) + (hasInnerList ? 0 : 20),
-        }}
+        style={{ paddingLeft }}
         {...(hasInnerList && {
           'aria-expanded': isOpen,
         })}

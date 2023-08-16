@@ -14,19 +14,19 @@ describe('useLocationHash', () => {
     const { result } = renderHook(() => useLocationHash())
 
     act(() => {
-      const newHash = '#newHash'
+      const newHash = 'newHash'
       window.location.hash = newHash
       window.dispatchEvent(new HashChangeEvent('hashchange'))
     })
 
-    expect(result.current.hash).toBe('#newHash')
+    expect(result.current.hash).toBe('newHash')
   })
 
   it('updateHash updates the window.location.hash', () => {
     const { result } = renderHook(() => useLocationHash())
 
     act(() => {
-      result.current.updateHash('#updatedHash')
+      result.current.updateHash('updatedHash')
     })
 
     expect(window.location.hash).toBe('#updatedHash')
@@ -41,7 +41,7 @@ describe('useLocationHash', () => {
       result.current.updateHash(initialHash)
     })
 
-    expect(window.location.hash).toBe(initialHash)
+    expect(window.location.hash).toBe(`#${initialHash}`)
   })
 
   it('cleanup removes event listener', () => {

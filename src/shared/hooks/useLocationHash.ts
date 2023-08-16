@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 
 export const useLocationHash = () => {
-  const [hash, setHash] = useState(() => window.location.hash)
+  const [hash, setHash] = useState(() => window.location.hash.slice(1))
 
   const hashChangeHandler = useCallback(() => {
-    setHash(window.location.hash)
+    setHash(window.location.hash.slice(1))
   }, [])
 
   useEffect(() => {

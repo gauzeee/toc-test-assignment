@@ -1,9 +1,10 @@
 import { fireEvent, render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { mockPagesContext } from '@/__fixtures__/mockPagesContext.ts'
 import { setDocumentTitle } from '@/shared'
 
-import { type EnhancedPages, PagesContext } from '../../../../lib/context'
+import { PagesContext } from '../../../../lib/context'
 import { ExpandableListItem } from '../ExpandableListItem/ExpandableListItem'
 
 const updateHashMock = vi.fn()
@@ -13,31 +14,6 @@ describe('ExpandableListItem', () => {
     vi.resetAllMocks()
   })
   vi.spyOn(window, 'scrollTo')
-
-  const mockPagesContext: EnhancedPages = {
-    mockPageId: {
-      pages: ['mockNestedPageId'],
-      parentId: 'ij',
-      level: 0,
-      title: 'Mock Page Title',
-      url: '',
-      allNestedPagesIds: ['mockNestedPageId'],
-      id: 'mockPageId',
-      tabIndex: 0,
-      doNotShowWarningLink: true,
-    },
-    mockNestedPageId: {
-      pages: [],
-      parentId: 'mockPageId',
-      level: 1,
-      title: 'Mock Nested Page Title',
-      url: '',
-      allNestedPagesIds: [],
-      id: 'mockNestedPageId',
-      tabIndex: 0,
-      doNotShowWarningLink: true,
-    },
-  }
 
   it('renders without crashing', () => {
     render(
@@ -64,7 +40,7 @@ describe('ExpandableListItem', () => {
         ...(actual as NonNullable<unknown>),
         setDocumentTitle: vi.fn(),
         useLocationHash: () => ({
-          hash: '#mockNestedPageId',
+          hash: 'mockNestedPageId',
           updateHash: vi.fn(),
         }),
       }
@@ -100,7 +76,7 @@ describe('ExpandableListItem', () => {
         ...(actual as NonNullable<unknown>),
         setDocumentTitle: vi.fn(),
         useLocationHash: () => ({
-          hash: '#mockNestedPageId',
+          hash: 'mockNestedPageId',
           updateHash: updateHashMock,
         }),
       }

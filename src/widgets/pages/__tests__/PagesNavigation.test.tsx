@@ -9,6 +9,11 @@ import { PagesNavigation } from '../PagesNavigation'
 mockApiService()
 describe('PagesNavigation component', () => {
   let container: RenderResult
+
+  afterEach(() => {
+    container = undefined as unknown as RenderResult
+  })
+
   it('renders table of contents element with data', async () => {
     await act(async () => {
       container = await render(<PagesNavigation />)
@@ -64,9 +69,13 @@ describe('PagesNavigation component', () => {
   })
 
   it('displays loading state while fetching data', async () => {
-    apiService.getAllPages = vi.fn(() => new Promise(() => {})) // Never resolves
-    const { getAllByTestId } = render(<PagesNavigation />)
-    const loader = getAllByTestId('list-item-loader')
+    apiService.searchPages = vi.fn(() => new Promise(() => {})) // Never resolves
+
+    await act(async () => {
+      container = await render(<PagesNavigation />)
+    })
+
+    const loader = container.getAllByTestId('list-item-loader')
 
     expect(loader[0]).toBeInTheDocument()
   })

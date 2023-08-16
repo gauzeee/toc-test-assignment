@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 const SEARCH_UPDATED_EVENT = 'searchupdated'
 export const useSearchParams = () => {
   const [searchParams, setParams] = useState(
-    new URLSearchParams(window.location.search)
+    () => new URLSearchParams(window.location.search)
   )
 
   const handleSearchChange = useCallback(() => {
