@@ -1,0 +1,7 @@
+.searchContainer {
+  margin-bottom: 0;
+
+  > div {
+    left: 1.125rem;
+  }
+}

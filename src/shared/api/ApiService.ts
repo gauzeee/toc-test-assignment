@@ -1,11 +1,17 @@
 import { ApiResponse, Page } from '@/server/types'
 
 const baseUrl = import.meta.env.VITE_API_URL
+
+// Improvement: use some lib with caching =)
+const cachedData: Record<string, unknown> = {}
 class ApiService {
   private async request<T>(url: string) {
+    if (url in cachedData) return Promise.resolve(cachedData[url] as T)
     try {
       const response = await fetch(`${baseUrl}${url}`)
-      return (await response.json()) as T
+      const data = (await response.json()) as T
+      cachedData[url] = data
+      return data
     } catch (e) {
       console.error(e)
       alert(e)
@@ -20,7 +26,7 @@ class ApiService {
   }
 
   async searchPages(searchString?: string) {
-    return this.request<ApiResponse>(`?search=${searchString}`)
+    return this.request<ApiResponse>(`/pages?q=${searchString}`)
   }
 }
 

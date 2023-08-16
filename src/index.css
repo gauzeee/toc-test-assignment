@@ -22,6 +22,7 @@
   --background-color: #fff;
   --inverted-background-color: #19191c;
   --text-color: #000;
+  --disabled-text-color: #6b6b6b;
   --inverted-text-color: #fff;
   --background-light-grey-5: rgba(244, 244, 244, 0.38);
   --gray-color-d1: #d1d1d2;
@@ -43,6 +44,7 @@
     --background-color: #19191c;
     --inverted-background-color: #fff;
     --text-color: #fff;
+    --disabled-text-color: #a2a2a2;
     --inverted-text-color: #000;
     --base-opacity-hover: rgba(255, 255, 255, 0.05);
     --opacity-hover: rgba(255, 255, 255, 0.1);

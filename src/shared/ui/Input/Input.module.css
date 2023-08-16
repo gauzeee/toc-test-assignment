@@ -1,0 +1,58 @@
+.container {
+  position: relative;
+  margin-bottom: 1.25rem;
+
+  &WithIconBefore {
+    svg {
+      height: 1rem;
+      width: 1rem;
+      path {
+        fill: var(--text-color);
+      }
+    }
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 0.625rem 0.625rem 0.625rem 1rem;
+  color: var(--text-color);
+  border-radius: 0;
+  outline: none;
+  background-color: var(--base-opacity-hover);
+  border: 1px solid var(--base-opacity-hover);
+  height: 2.25rem;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    color 0.3s;
+
+  &:disabled {
+    background-color: var(--gray-color-d1);
+    border-color: var(--gray-color-d1);
+    color: var(--disabled-text-color);
+    pointer-events: none;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: var(--opacity-hover);
+  }
+
+  &:focus:not(:disabled) {
+    border-color: var(--light-primary);
+  }
+
+  &WithIconBefore {
+    padding-left: 2.5rem;
+  }
+
+  &IconBeforeContainer {
+    position: absolute;
+    background: transparent;
+    height: 1rem;
+    width: 1rem;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

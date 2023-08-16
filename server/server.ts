@@ -2,7 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import https from 'https'
 
-import { ApiResponse } from './types'
+import { ApiResponse, Page } from './types'
 
 const PORT = 4000
 
@@ -37,17 +37,32 @@ const startServer = async () => {
 
     app.get('/pages', (req, res) => {
       const {
-        query: { search },
+        query: { q },
       } = req
-      if (search && typeof search === 'string') {
+      if (q && typeof q === 'string') {
         const dataWithMatchedTitles: ApiResponse = Object.entries(
           data.entities.pages
         ).reduce(
           (acc, [pageId, page]) => {
-            if (page.title.toLowerCase().includes(search.toLowerCase())) {
-              acc.entities.pages[pageId] = page
-              if (page.level === 0) {
-                acc.topLevelIds.push(pageId)
+            if (page.title.toLowerCase().includes(q.toLowerCase())) {
+              if (!acc.entities.pages[pageId]) {
+                acc.entities.pages[pageId] = { ...page }
+                if (page.level === 0) {
+                  acc.topLevelIds.push(pageId)
+                } else {
+                  const addParent = (page: Page) => {
+                    if (!acc.entities.pages[page.id]) {
+                      acc.entities.pages[page.id] = { ...page }
+                      if (page.level === 0) {
+                        acc.topLevelIds.push(page.id)
+                      } else {
+                        addParent(data.entities.pages[page.parentId])
+                      }
+                    }
+                  }
+
+                  addParent(data.entities.pages[page.parentId])
+                }
               }
             }
             return acc
@@ -59,6 +74,22 @@ const startServer = async () => {
             topLevelIds: [],
           } as ApiResponse
         )
+
+        const allExistedPagesIds = Object.keys(
+          dataWithMatchedTitles.entities.pages
+        )
+
+        for (const pageId in dataWithMatchedTitles.entities.pages) {
+          const storedPagesArray = [
+            ...(data?.entities?.pages?.[pageId]?.pages || []),
+          ]
+          if (storedPagesArray) {
+            dataWithMatchedTitles.entities.pages[pageId].pages =
+              storedPagesArray.filter(
+                (pagesPageId) => allExistedPagesIds.indexOf(pagesPageId) !== -1
+              )
+          }
+        }
 
         return res.json(dataWithMatchedTitles)
       }

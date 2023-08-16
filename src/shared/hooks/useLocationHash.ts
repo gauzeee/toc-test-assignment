@@ -12,7 +12,7 @@ export const useLocationHash = () => {
     return () => {
       window.removeEventListener('hashchange', hashChangeHandler)
     }
-  }, [])
+  }, [hashChangeHandler])
 
   const updateHash = useCallback(
     (newHash: string) => {

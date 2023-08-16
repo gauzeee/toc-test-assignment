@@ -22,13 +22,12 @@ export const TableOfContents = ({
     [pages]
   )
 
-  const isLoading = loading && !pages
-  const isEmpty = !loading && !pages
+  const isEmpty = !loading && !Object.keys(enhancedPages).length
 
   return (
     <>
       <ul data-testid="table-of-contents">
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <PagesContext.Provider value={enhancedPages}>
