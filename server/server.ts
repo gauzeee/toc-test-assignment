@@ -75,21 +75,14 @@ const startServer = async () => {
           } as ApiResponse
         )
 
-        const allExistedPagesIds = Object.keys(
-          dataWithMatchedTitles.entities.pages
-        )
-
-        for (const pageId in dataWithMatchedTitles.entities.pages) {
-          const storedPagesArray = [
-            ...(data?.entities?.pages?.[pageId]?.pages || []),
-          ]
-          if (storedPagesArray) {
-            dataWithMatchedTitles.entities.pages[pageId].pages =
-              storedPagesArray.filter(
-                (pagesPageId) => allExistedPagesIds.indexOf(pagesPageId) !== -1
-              )
+        Object.values(dataWithMatchedTitles.entities.pages).forEach((page) => {
+          if (page.pages) {
+            page.pages = page.pages.filter(
+              (pagesPageId) =>
+                pagesPageId in dataWithMatchedTitles.entities.pages
+            )
           }
-        }
+        })
 
         return res.json(dataWithMatchedTitles)
       }

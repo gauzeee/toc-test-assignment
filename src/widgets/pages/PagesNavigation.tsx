@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { SearchFilter, TableOfContents } from '@/features'
 import { ApiResponse } from '@/server/types'
@@ -10,9 +10,7 @@ export const PagesNavigation = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<ApiResponse>()
   const { searchParams } = useSearchParams()
-  const searchString = useMemo(() => searchParams.get('q'), [searchParams])
-
-  console.log(searchParams)
+  const searchString = searchParams.get('q')
 
   useEffect(() => {
     setLoading(true)

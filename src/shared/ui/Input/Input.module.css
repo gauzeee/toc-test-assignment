@@ -19,7 +19,6 @@
   color: var(--text-color);
   border-radius: 0;
   outline: none;
-  background-color: var(--base-opacity-hover);
   border: 1px solid var(--base-opacity-hover);
   height: 2.25rem;
   transition:
