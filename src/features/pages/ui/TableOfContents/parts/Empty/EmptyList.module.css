@@ -1,4 +1,5 @@
 .emptyList {
   padding: 1.375rem;
   text-align: center;
+  color: var(--text-color);
 }

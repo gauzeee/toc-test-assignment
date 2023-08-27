@@ -22,7 +22,7 @@ export const TableOfContents = ({
     [pages]
   )
 
-  const isEmpty = !loading && !Object.keys(enhancedPages).length
+  const isEmpty = !loading && Object.keys(enhancedPages).length < 2
 
   return (
     <>
