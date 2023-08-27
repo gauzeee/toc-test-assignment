@@ -1,10 +1,11 @@
 import { Page } from '@/server/types'
 
-import { EnhancedPage } from '../context'
+import { EnhancedPage, EnhancedPages } from '../context'
 
 export const mapPagesToEnhancedPages = (
   pages: Record<string, Page>
-): Record<string, EnhancedPage> => {
+): EnhancedPages => {
+  if ('enhanced' in pages) return pages as EnhancedPages
   for (const pageId in pages) {
     let page = pages[pageId]
     while (page?.parentId) {
@@ -19,5 +20,8 @@ export const mapPagesToEnhancedPages = (
     }
   }
 
-  return pages as Record<string, EnhancedPage>
+  const enhancedPages = pages as EnhancedPages
+  enhancedPages.enhanced = true
+
+  return enhancedPages
 }

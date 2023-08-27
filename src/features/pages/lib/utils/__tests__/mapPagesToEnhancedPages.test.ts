@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { Page } from '@/server/types.ts'
+import { Page } from '@/server/types'
 
 import { mapPagesToEnhancedPages } from '../mapPagesToEnhancedPages'
 
@@ -20,6 +20,7 @@ describe('mapPagesDataToEnhancedPages', () => {
       },
       page2: { id: 'page2', parentId: 'page1', allNestedPagesIds: ['page3'] },
       page3: { id: 'page3', parentId: 'page2' },
+      enhanced: true,
     }
 
     const result = mapPagesToEnhancedPages(data)
@@ -42,10 +43,22 @@ describe('mapPagesDataToEnhancedPages', () => {
       },
       page2: { id: 'page2', parentId: 'page1' },
       page3: { id: 'page3', parentId: 'missingPage' },
+      enhanced: true,
     }
 
     const result = mapPagesToEnhancedPages(data)
 
     expect(result).toEqual(expectedEnhancedPages)
+  })
+
+  it('return received object without changes if enhanced flag exists', () => {
+    const data = {
+      page1: { id: 'page1', parentId: 'missingPage' } as Page,
+      enhanced: true,
+    } as unknown as Record<string, Page>
+
+    const result = mapPagesToEnhancedPages(data)
+
+    expect(result).toEqual(data)
   })
 })
