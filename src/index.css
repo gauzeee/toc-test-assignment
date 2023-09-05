@@ -110,3 +110,8 @@ li {
     'aside main main'
     'aside footer footer';
 }
+
+span.highlighted {
+  background-color: yellow;
+  color: black;
+}

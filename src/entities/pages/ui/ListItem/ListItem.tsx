@@ -1,5 +1,4 @@
 import {
-  forwardRef,
   KeyboardEventHandler,
   LiHTMLAttributes,
   MouseEventHandler,
@@ -22,53 +21,48 @@ interface ListItemProps extends LiHTMLAttributes<HTMLLIElement> {
   isOpen?: boolean
   testId?: string
   showBacklight?: boolean
+  id: string
 }
 
-export const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
-  (
-    {
-      children,
-      handleClick,
-      handleKeyUp,
-      hasInnerList,
-      level,
-      isActive,
-      isOpen,
-      testId,
-      showBacklight,
-    },
-    ref
-  ) => {
-    const paddingLeft = useMemo(
-      () => 16 * (level + 1) + (hasInnerList ? 0 : 20),
-      [level, hasInnerList]
-    )
-    return (
-      <li
-        data-testid={testId}
-        ref={ref}
-        onClick={handleClick}
-        onKeyUp={handleKeyUp}
-        role="button"
-        tabIndex={0}
-        className={clsx(
-          styles.listItem,
-          isActive && styles.listItemActive,
-          isOpen && styles.listItemExpanded,
-          showBacklight && styles.listItemBacklight
-        )}
-        style={{ paddingLeft }}
-        {...(hasInnerList && {
-          'aria-expanded': isOpen,
-        })}
-      >
-        {hasInnerList && (
-          <RightIcon data-testid="right-icon" className={styles.listItemIcon} />
-        )}{' '}
-        {children}
-      </li>
-    )
-  }
-)
-
-ListItem.displayName = 'ListItem'
+export const ListItem = ({
+  children,
+  handleClick,
+  handleKeyUp,
+  hasInnerList,
+  level,
+  isActive,
+  isOpen,
+  testId,
+  showBacklight,
+  id,
+}: ListItemProps) => {
+  const paddingLeft = useMemo(
+    () => 16 * (level + 1) + (hasInnerList ? 0 : 20),
+    [level, hasInnerList]
+  )
+  return (
+    <li
+      id={id}
+      data-testid={testId}
+      onClick={handleClick}
+      onKeyUp={handleKeyUp}
+      role="button"
+      tabIndex={0}
+      className={clsx(
+        styles.listItem,
+        isActive && styles.listItemActive,
+        isOpen && styles.listItemExpanded,
+        showBacklight && styles.listItemBacklight
+      )}
+      style={{ paddingLeft }}
+      {...(hasInnerList && {
+        'aria-expanded': isOpen,
+      })}
+    >
+      {hasInnerList && (
+        <RightIcon data-testid="right-icon" className={styles.listItemIcon} />
+      )}{' '}
+      {children}
+    </li>
+  )
+}

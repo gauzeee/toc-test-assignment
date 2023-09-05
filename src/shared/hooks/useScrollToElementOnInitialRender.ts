@@ -1,15 +1,16 @@
 import { useEffect } from 'react'
 
 let initialRender = true
-export const useScrollToElementOnInitialRender = <T extends HTMLElement | null>(
+export const useScrollToElementOnInitialRender = (
   isActive: boolean,
-  element: T
+  id: string
 ) => {
   useEffect(() => {
-    if (isActive && initialRender && element) {
-      element.scrollIntoView({ block: 'center' })
+    if (isActive && initialRender) {
+      const element = document.getElementById(id)
+      element?.scrollIntoView({ block: 'center' })
       initialRender = false
     }
-  }, [element, isActive])
+  }, [id, isActive])
   return null
 }

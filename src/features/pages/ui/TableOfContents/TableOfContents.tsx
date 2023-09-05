@@ -1,43 +1,18 @@
-import { useMemo } from 'react'
+import { ApiResponse } from '@/server/types'
 
-import { Page } from '@/server/types'
+import { PagesProvider } from '../../lib'
 
-import { mapPagesToEnhancedPages, PagesContext } from '../../lib'
-
-import { EmptyList, ExpandableListItem, Loader } from './parts'
+import { TopLevelList } from './parts/TopLevelList/TopLevelList'
 
 type TableOfContentsProps = {
-  topLevelIds?: string[]
   loading?: boolean
-  pages?: Record<string, Page>
+  tocData?: ApiResponse
 }
 
-export const TableOfContents = ({
-  loading,
-  topLevelIds,
-  pages,
-}: TableOfContentsProps) => {
-  const enhancedPages = useMemo(
-    () => (pages ? mapPagesToEnhancedPages(pages) : {}),
-    [pages]
-  )
-
-  const isEmpty = !loading && Object.keys(enhancedPages).length < 2
-
+export const TableOfContents = ({ loading, tocData }: TableOfContentsProps) => {
   return (
-    <>
-      <ul data-testid="table-of-contents">
-        {loading ? (
-          <Loader />
-        ) : (
-          <PagesContext.Provider value={enhancedPages}>
-            {topLevelIds?.map((pageId) => (
-              <ExpandableListItem key={pageId} pageId={pageId} />
-            ))}
-          </PagesContext.Provider>
-        )}
-      </ul>
-      {isEmpty && <EmptyList />}
-    </>
+    <PagesProvider tocData={tocData} loading={loading}>
+      <TopLevelList />
+    </PagesProvider>
   )
 }

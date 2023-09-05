@@ -1,39 +1,20 @@
-import { KeyboardEvent, SyntheticEvent, useRef, useState } from 'react'
-
 import { ListItem } from '@/entities'
 import { useListItemState } from '@/features/pages/lib'
-import {
-  AnimateHeight,
-  setDocumentTitle,
-  useLocationHash,
-  useScrollToElementOnInitialRender,
-} from '@/shared'
+import { AnimateHeight, useScrollToElementOnInitialRender } from '@/shared'
 
 import { NestedList } from '../NestedList/NestedList'
 export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
-  const { hash, updateHash } = useLocationHash()
-  const { page, showBacklight, isActiveParent, isActive, hasInnerList } =
-    useListItemState(pageId, hash)
-  const [isOpen, setIsOpen] = useState(isActiveParent || isActive)
-  const listItemRef = useRef<HTMLLIElement>(null)
+  const {
+    page,
+    showBacklight,
+    isActive,
+    hasInnerList,
+    handleClick,
+    handleKeyUp,
+    isOpen,
+  } = useListItemState(pageId)
 
-  useScrollToElementOnInitialRender(isActive, listItemRef?.current)
-  const onSelectElement = () => {
-    setIsOpen((prev) => !prev)
-    updateHash(pageId)
-    setDocumentTitle(page?.title)
-  }
-
-  const handleClick = (e: SyntheticEvent<HTMLLIElement>) => {
-    e.stopPropagation()
-    onSelectElement()
-  }
-
-  const handleKeyUp = (e: KeyboardEvent<HTMLLIElement>) => {
-    if (e.key === 'Enter') {
-      onSelectElement()
-    }
-  }
+  useScrollToElementOnInitialRender(isActive, `${pageId}-list-item`)
 
   return (
     <>
@@ -45,10 +26,10 @@ export const ExpandableListItem = ({ pageId }: { pageId: string }) => {
         isActive={isActive}
         showBacklight={showBacklight}
         isOpen={isOpen}
-        ref={listItemRef}
+        id={`${pageId}-list-item`}
         testId={`${pageId}-list-item`}
       >
-        {page.title}
+        <span dangerouslySetInnerHTML={{ __html: page.title }} />
       </ListItem>
       {hasInnerList && (
         <AnimateHeight isOpen={isOpen}>
